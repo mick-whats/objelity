@@ -34,7 +34,7 @@ objelity =
     result = []
     pathArray[0].some (s,columnIndex)->
       rows = pathArray.map (row)-> row[columnIndex]
-      if rows.every (row)-> row is s
+      if rows.every((row)-> row is s)
         result.push(s)
         return false
       else
