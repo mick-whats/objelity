@@ -19,8 +19,6 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "chokidar": "^2.0.3",
-    "chokidar-cli": "^1.2.0",
     "coffeescript": "^2.2.3",
     "nyc": "^13.0.1"
   },
