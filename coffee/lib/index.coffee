@@ -127,12 +127,12 @@ objelity =
     objelity.mapObject obj, (val, p, i, obj)->
       switch typeof val
         when 'undefined'
-          'undefined'
+          Object::toString.call(val)
         when 'function'
           val.toString()
         else
           if _.isNull(val)
-            'null'
+            Object::toString.call(val)
           else
             val.toString()
 

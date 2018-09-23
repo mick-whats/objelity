@@ -335,10 +335,10 @@ test 'to string of deep keys', (t) ->
     arr:[
       'true',
       'false'
-      'undefined'
+      '[object Undefined]'
     ]
     o:
       sym: 'Symbol(foo)'
-      nil: 'null'
+      nil: '[object Null]'
       fn: "function () {\n          return false;\n        }"
   }

@@ -498,10 +498,10 @@
     return t.deepEqual(newObj, {
       str: 'string1',
       num: '123',
-      arr: ['true', 'false', 'undefined'],
+      arr: ['true', 'false', '[object Undefined]'],
       o: {
         sym: 'Symbol(foo)',
-        nil: 'null',
+        nil: '[object Null]',
         fn: "function () {\n          return false;\n        }"
       }
     });
