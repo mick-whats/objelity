@@ -153,7 +153,7 @@ objelity =
             "undefined"
             Object::toString.call(value) + " #{value}"
           when _.isFunction(value)
-            "(#{value.toString()}()"
+            "(#{value.toString()})()"
           else
             value
     JSON.stringify(obj,replacer,space)
