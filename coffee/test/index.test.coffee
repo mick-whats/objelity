@@ -358,7 +358,7 @@ getObject = ->
     gfn: -> yield 0
     args: arguments
     obcr: Object.create(null)
-    date: new Date('2018,09,15')
+    date: new Date(Date.UTC(2018,9,15))
     reg: /foo/
     newreg: new RegExp('foo')
     err: new Error('unknown error')
