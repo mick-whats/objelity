@@ -130,10 +130,31 @@ objelity =
           Object::toString.call(val)
         when 'function'
           val.toString()
+        when 'boolean', 'number'
+          val
         else
           if _.isNull(val)
             Object::toString.call(val)
           else
             val.toString()
-
+  stringify: (obj, replacer, space=null)->
+    unless replacer
+      replacer = (key, value)->
+        switch on
+          when _.isError(value)
+            # "#{value}"
+            Object::toString.call(value) + " #{value}"
+          when _.isRegExp(value)
+            # "#{value}"
+            Object::toString.call(value) + " #{value}"
+          when _.isNaN(value)
+            "[object Number] NaN"
+          when _.isUndefined(value)
+            "undefined"
+            Object::toString.call(value) + " #{value}"
+          when _.isFunction(value)
+            "(#{value.toString()}()"
+          else
+            value
+    JSON.stringify(obj,replacer,space)
 module.exports = objelity

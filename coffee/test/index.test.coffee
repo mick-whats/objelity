@@ -129,6 +129,7 @@ test 'eachObject(obj, fn)', (t) ->
       t.is val, 3
     else if path.includes('aaa.eee.ggg')
       t.is val, 4
+    return
 test 'mapObject(obj, fn) with sum', (t) ->
   obj =
     aaa:
@@ -331,10 +332,10 @@ test 'to string of deep keys', (t) ->
   newObj = objelity.toStringOfDeepKeys(obj)
   t.deepEqual newObj,{
     str: 'string1'
-    num: '123'
+    num: 123
     arr:[
-      'true',
-      'false'
+      true
+      false
       '[object Undefined]'
     ]
     o:
@@ -342,3 +343,78 @@ test 'to string of deep keys', (t) ->
       nil: '[object Null]'
       fn: "function () {\n          return false;\n        }"
   }
+
+getObject = ->
+  {
+    num: 123
+    str: 'string'
+    bool1: true
+    bool2: false
+    nul: null
+    und: undefined
+    arr: ['a','r','r']
+    buf: new Buffer('')
+    fn: -> true
+    gfn: -> yield 0
+    args: arguments
+    obcr: Object.create(null)
+    date: new Date('2018,09,15')
+    reg: /foo/
+    newreg: new RegExp('foo')
+    err: new Error('unknown error')
+    symbol: Symbol('str')
+    map: new Map([['a',1],['b',2]])
+    weakMap: new WeakMap()
+    set: new Set([1,2,'3'])
+    weakSet: new WeakSet()
+    int8Array: new Int8Array([1,9876543210,-9876543210])
+    uint8Array: new Uint8Array([1,9876543210,-9876543210])
+    uint8ClampedArray: new Uint8ClampedArray([1,9876543210,-9876543210])
+    int16Array: new Int16Array([1,9876543210,-9876543210])
+    uint16Array: new Uint16Array([1,9876543210,-9876543210])
+    int32Array: new Int32Array([1,9876543210,-9876543210])
+    uint32Array: new Uint32Array([1,9876543210,-9876543210])
+    float32Array: new Float32Array([1,9876543210,-9876543210])
+    float64Array: new Float64Array([1,9876543210,-9876543210])
+    nan: 0/0
+  }
+
+test 'stringify diff', (t) ->
+  a = objelity.stringify(getObject(999),null,2)
+  aa = JSON.parse(a)
+  c = JSON.stringify(getObject(999),null,2)
+  cc = JSON.parse(c)
+  t.notDeepEqual aa,cc
+  t.snapshot a
+  t.snapshot c
+
+test 'stringify primitive', (t) ->
+  t.is objelity.stringify('str'), '"str"'
+  t.is objelity.stringify(123), '123'
+  t.is objelity.stringify(true), 'true'
+  t.is objelity.stringify(false), 'false'
+  t.is objelity.stringify(null), 'null'
+  t.is objelity.stringify(undefined), '"[object Undefined] undefined"'
+  t.is objelity.stringify(NaN), '"[object Number] NaN"'
+  t.is objelity.stringify([1,2,3]), '[1,2,3]'
+
+test 'stringify readme', (t) ->
+  obj =
+    undefined: undefined
+    function: -> true
+    generator: -> yield 0
+    RegExp: /foo/
+    newReg: new RegExp('foo')
+    err: new Error('unknown error')
+    # symbol: Symbol('str')
+    # map: new Map([['a',1],['b',2]])
+    # weakMap: new WeakMap()
+    # set: new Set([1,2,'3'])
+    # weakSet: new WeakSet()
+    NaN: 0/0
+  a = objelity.stringify(obj,null,2)
+  aa = JSON.parse(a)
+  c = JSON.stringify(obj,null,2)
+  cc = JSON.parse(c)
+  t.snapshot aa
+  t.snapshot cc
