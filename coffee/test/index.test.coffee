@@ -40,6 +40,12 @@ test 'commonPath(pathStrings)', (t) ->
     'a.b.c.d.s',
   ]
   t.deepEqual objelity.commonPath(paths),['a','b','c']
+test 'commonPath(pathStrings)', (t) ->
+  paths = [
+    'a.b.c.d.e.f',
+    'd.e.f',
+  ]
+  t.deepEqual objelity.commonPath(paths),[]
 test 'commonPath(pathArray)', (t) ->
   paths = [
     ['a','b','c','d','e']
@@ -418,3 +424,76 @@ test 'stringify readme', (t) ->
   cc = JSON.parse(c)
   t.snapshot aa
   t.snapshot cc
+
+test 'pickValue(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickValue obj, (val, path, index, object) ->
+    path.includes('aaa')
+  t.deepEqual res,1
+test 'pickValue(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickValue obj, (val, path, index, object) ->
+    val % 2 is 0
+  t.deepEqual res,2
+test 'pickValue(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickValue obj, (val, path, index, object) ->
+    /fff|ggg/.test(path)
+  t.deepEqual res,3
+test 'pickObject(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickObject obj, (val, path, index, object) ->
+    path.includes('aaa')
+  t.deepEqual res,{aaa:{bbb:{ccc:1}}}
+test 'pickObject(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickObject obj, (val, path, index, object) ->
+    val % 2 is 0
+  t.deepEqual res,{aaa:{bbb:{ddd:2}}}
+test 'pickObject(obj, fn)', (t) ->
+  obj =
+    aaa:
+      bbb:
+        ccc: 1
+        ddd: 2
+      eee:
+        fff: 3
+        ggg: 4
+  res = objelity.pickObject obj, (val, path, index, object) ->
+    /fff|ggg/.test(path)
+  t.deepEqual res,{aaa:{eee:{fff:3}}}
