@@ -47,6 +47,12 @@
     return t.deepEqual(objelity.commonPath(paths), ['a', 'b', 'c']);
   });
 
+  test('commonPath(pathStrings)', function(t) {
+    var paths;
+    paths = ['a.b.c.d.e.f', 'd.e.f'];
+    return t.deepEqual(objelity.commonPath(paths), []);
+  });
+
   test('commonPath(pathArray)', function(t) {
     var paths;
     paths = [['a', 'b', 'c', 'd', 'e'], ['a', 'b', 'c', 'x', 'z', 'q'], ['a', 'b', 'c', 'g', 'r'], ['a', 'b', 'c', 's'], ['a', 'b', 'c']];

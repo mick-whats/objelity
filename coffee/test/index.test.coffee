@@ -40,6 +40,12 @@ test 'commonPath(pathStrings)', (t) ->
     'a.b.c.d.s',
   ]
   t.deepEqual objelity.commonPath(paths),['a','b','c']
+test 'commonPath(pathStrings)', (t) ->
+  paths = [
+    'a.b.c.d.e.f',
+    'd.e.f',
+  ]
+  t.deepEqual objelity.commonPath(paths),[]
 test 'commonPath(pathArray)', (t) ->
   paths = [
     ['a','b','c','d','e']
