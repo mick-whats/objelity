@@ -158,4 +158,21 @@ objelity =
           else
             value
     JSON.stringify(obj,replacer,space)
+
+  # fnでtrueを返すオブジェクトを返す
+  # 複数当てはまる場合はいずれかを返す
+  pickValue: (obj, fn)->
+    filtered = objelity.filterObject(obj, fn)
+    _keys = objelity.deepKeys(filtered)
+    if _keys.length <= 0
+      return {}
+    else
+      return _.get(filtered,_keys[0])
+  pickObject: (obj, fn)->
+    filtered = objelity.filterObject(obj, fn)
+    _keys = objelity.deepKeys(filtered)
+    if _keys.length <= 0
+      return {}
+    else
+      return _.set({},_keys[0],_.get(filtered,_keys[0]))
 module.exports = objelity

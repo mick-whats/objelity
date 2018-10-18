@@ -617,3 +617,101 @@ objelity.stringify(obj, null, 2);
 //   undefined: '[object Undefined] undefined',
 }
 ```
+
+---
+### pickValue(obj, fn)
+---
+
+filterObjectして残った要素の値を返します。
+複数の要素が当てはまる場合は最初の要素の値が返ります。
+ただしobjectは順番が保証されません。最初の要素が何になるかはわかりません。
+
+#### Since
+1.1.1
+
+#### Arguments
+Object (Object | Array)
+callback (val, path, index, object)
+
+#### Returns
+Any
+
+#### Example
+
+```js
+var obj = {
+  aaa: {
+    bbb: {
+      ccc: 1,
+      ddd: 2
+    },
+    eee: {
+      fff: 3,
+      ggg: 4
+    }
+  }
+};
+objelity.pickValue(obj, function(val, path, index, object) {
+  return path.includes('aaa');
+}); // => 1
+// 条件がすべての要素に当てはまっています。最初のcccがpickされています。
+
+objelity.pickValue(obj, function(val, path, index, object) {
+  return val % 2 === 0;
+}); //=> 2
+// bbbとgggが条件に合致しています。最初のbbbがpickされています。
+
+objelity.pickValue(obj, function(val, path, index, object) {
+  return /fff|ggg/.test(path);
+}); //=> 3
+// fffとgggが条件に合致しています。最初のfffがpickされています。
+```
+
+---
+### pickObject(obj, fn)
+---
+
+filterObjectして残った要素を返します。
+複数の要素が当てはまる場合は最初の要素の値が返ります。
+ただしobjectは順番が保証されません。最初の要素が何になるかはわかりません。
+
+#### Since
+1.1.1
+
+#### Arguments
+Object (Object | Array)
+callback (val, path, index, object)
+
+#### Returns
+Object
+
+#### Example
+
+```js
+var obj = {
+  aaa: {
+    bbb: {
+      ccc: 1,
+      ddd: 2
+    },
+    eee: {
+      fff: 3,
+      ggg: 4
+    }
+  }
+};
+objelity.pickObject(obj, function(val, path, index, object) {
+  return path.includes('aaa');
+}); // => {aaa:{bbb:{ccc:1}}}
+// 条件がすべての要素に当てはまっています。最初のcccがpickされています。
+
+objelity.pickObject(obj, function(val, path, index, object) {
+  return val % 2 === 0;
+}); //=> {aaa:{bbb:{ddd:2}}}
+// bbbとgggが条件に合致しています。最初のbbbがpickされています。
+
+objelity.pickObject(obj, function(val, path, index, object) {
+  return /fff|ggg/.test(path);
+}); //=> {aaa:{eee:{fff:3}}}
+// fffとgggが条件に合致しています。最初のfffがpickされています。
+```

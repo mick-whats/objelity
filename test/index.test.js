@@ -603,4 +603,142 @@
     return t.snapshot(cc);
   });
 
+  test('pickValue(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickValue(obj, function(val, path, index, object) {
+      return path.includes('aaa');
+    });
+    return t.deepEqual(res, 1);
+  });
+
+  test('pickValue(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickValue(obj, function(val, path, index, object) {
+      return val % 2 === 0;
+    });
+    return t.deepEqual(res, 2);
+  });
+
+  test('pickValue(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickValue(obj, function(val, path, index, object) {
+      return /fff|ggg/.test(path);
+    });
+    return t.deepEqual(res, 3);
+  });
+
+  test('pickObject(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickObject(obj, function(val, path, index, object) {
+      return path.includes('aaa');
+    });
+    return t.deepEqual(res, {
+      aaa: {
+        bbb: {
+          ccc: 1
+        }
+      }
+    });
+  });
+
+  test('pickObject(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickObject(obj, function(val, path, index, object) {
+      return val % 2 === 0;
+    });
+    return t.deepEqual(res, {
+      aaa: {
+        bbb: {
+          ddd: 2
+        }
+      }
+    });
+  });
+
+  test('pickObject(obj, fn)', function(t) {
+    var obj, res;
+    obj = {
+      aaa: {
+        bbb: {
+          ccc: 1,
+          ddd: 2
+        },
+        eee: {
+          fff: 3,
+          ggg: 4
+        }
+      }
+    };
+    res = objelity.pickObject(obj, function(val, path, index, object) {
+      return /fff|ggg/.test(path);
+    });
+    return t.deepEqual(res, {
+      aaa: {
+        eee: {
+          fff: 3
+        }
+      }
+    });
+  });
+
 }).call(this);
