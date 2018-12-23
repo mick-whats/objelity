@@ -622,7 +622,7 @@ objelity.stringify(obj, null, 2);
 ### pickValue(obj, fn)
 ---
 
-filterObjectして残った要素の値を返します。
+filterObjectして残った要素の値を１つ返します。
 複数の要素が当てはまる場合は最初の要素の値が返ります。
 ただしobjectは順番が保証されません。最初の要素が何になるかはわかりません。
 
@@ -671,7 +671,7 @@ objelity.pickValue(obj, function(val, path, index, object) {
 ### pickObject(obj, fn)
 ---
 
-filterObjectして残った要素を返します。
+filterObjectして残った要素を１つ返します。
 複数の要素が当てはまる場合は最初の要素の値が返ります。
 ただしobjectは順番が保証されません。最初の要素が何になるかはわかりません。
 

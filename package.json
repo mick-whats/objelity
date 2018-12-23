@@ -15,7 +15,7 @@
     "deepKeys"
   ],
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash-core": "^4.17.11"
   },
   "devDependencies": {
     "ava": "^0.25.0",
